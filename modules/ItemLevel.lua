@@ -91,6 +91,7 @@ function mod:OnInitialize()
 end
 
 function mod:OnEnable()
+	wipe(updateCache)
 	self:RegisterMessage('AdiBags_UpdateButton', 'UpdateButton')
 	if SyLevel and self.db.profile.useSyLevel and not SyLevel:IsPipeEnabled('Adibags') then
 		SyLevel:EnablePipe('Adibags')
