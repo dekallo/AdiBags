@@ -92,6 +92,7 @@ function mod:OnInitialize()
 end
 
 function mod:OnEnable()
+	wipe(updateCache)
 	self:RegisterMessage('AdiBags_UpdateButton', 'UpdateButton')
 	if SyLevel and self.db.profile.useSyLevel and not SyLevel:IsPipeEnabled('Adibags') then
 		SyLevel:EnablePipe('Adibags')
@@ -184,7 +185,10 @@ end
 local function SetOptionAndUpdate(info, value)
 	mod.db.profile[info[#info]] = value
 	wipe(updateCache)
-	for button, text in pairs(texts) do
+	for button, _ in addon:GetPool("ItemButton"):IterateActiveObjects() do
+		mod:UpdateButton(nil, button)
+	end
+	for button, _ in addon:GetPool("BankItemButton"):IterateActiveObjects() do
 		mod:UpdateButton(nil, button)
 	end
 end
